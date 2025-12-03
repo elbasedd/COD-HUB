@@ -90,7 +90,7 @@ body {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(-50%);
 }
 
@@ -103,7 +103,7 @@ body {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(-50%);
 }
 
@@ -116,7 +116,7 @@ body {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(50%);
 }
 
@@ -470,6 +470,10 @@ footer.glass {
 
     .bg-right {
         right: -10%
+    }
+
+    .bg-center {
+        display: none;
     }
 
     .featured-links ul {

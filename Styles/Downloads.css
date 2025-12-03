@@ -89,7 +89,7 @@ body {
     object-fit: cover;
     opacity: 0.2;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
 }
 
 /* Background Animations / Animações de Fundo */
@@ -466,6 +466,10 @@ footer.glass {
         right: -10%;
     }
 
+    .bg-center {
+        display: none;
+    }
+
     .navbar a {
         font-size: 0.875rem;
         padding: var(--spacing-xs) var(--spacing-sm);
@@ -729,7 +733,7 @@ footer.glass {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(-50%);
 }
 
@@ -742,7 +746,7 @@ footer.glass {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(-50%);
 }
 
@@ -755,6 +759,6 @@ footer.glass {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(50%);
 }

@@ -305,7 +305,7 @@ a {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(-50%);
 }
 
@@ -318,7 +318,7 @@ a {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(-50%);
 }
 
@@ -331,6 +331,12 @@ a {
     object-fit: cover;
     opacity: 0.3;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     transform: translateX(50%);
+}
+/* Responsive - Hide center background on mobile */
+@media (max-width: 768px) {
+    .bg-center {
+        display: none;
+    }
 }

@@ -18,13 +18,15 @@
 
     function getRandomImages() {
         try {
-            // Check if we already have selected images in localStorage / Verifica se já temos imagens selecionadas no localStorage
-            const stored = localStorage.getItem('codhub_bg_images');
+            const stored = localStorage.getItem('codhub_bg_images_v2');
             if (stored) {
-                return JSON.parse(stored);
+                const parsed = JSON.parse(stored);
+                if (Array.isArray(parsed) && parsed.length === 3) {
+                    return parsed;
+                }
             }
         } catch (e) {
-            console.warn('localStorage not available:', e);
+            console.warn('localStorage not available or invalid:', e);
         }
 
         // Shuffle and pick 3 random images / Embaralha e escolhe 3 imagens aleatórias
@@ -33,7 +35,7 @@
 
         try {
             // Store for consistency across pages / Armazena para consistência entre páginas
-            localStorage.setItem('codhub_bg_images', JSON.stringify(selected));
+            localStorage.setItem('codhub_bg_images_v2', JSON.stringify(selected));
         } catch (e) {
             console.warn('Could not save to localStorage:', e);
         }
@@ -44,38 +46,45 @@
     function applyBackgroundImages() {
         try {
             const images = getRandomImages();
+            console.log('Selected background images:', images);
+
             const bgLeft = document.querySelector('.bg-left');
             const bgCenter = document.querySelector('.bg-center');
             const bgRight = document.querySelector('.bg-right');
 
-            if (bgLeft && images[0]) {
-                bgLeft.src = images[0];
-                bgLeft.style.display = 'block';
-            }
-            if (bgCenter && images[1]) {
-                bgCenter.src = images[1];
-                bgCenter.style.display = 'block';
-            }
-            if (bgRight && images[2]) {
-                bgRight.src = images[2];
-                bgRight.style.display = 'block';
-            }
+            const preloadAndApply = (element, src) => {
+                if (!element || !src) return;
+
+                const tempImage = new Image();
+                tempImage.onload = function () {
+                    console.log('Image loaded successfully:', src);
+                    element.src = src;
+                    element.style.display = 'block';
+                };
+                tempImage.onerror = function () {
+                    console.error('Failed to load image:', src);
+                };
+                tempImage.src = src;
+            };
+
+            preloadAndApply(bgLeft, images[0]);
+            preloadAndApply(bgCenter, images[1]);
+            preloadAndApply(bgRight, images[2]);
+
         } catch (e) {
             console.error('Error applying background images:', e);
         }
     }
 
-    // Apply images when DOM is ready / Aplica imagens quando o DOM estiver pronto
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', applyBackgroundImages);
     } else {
         applyBackgroundImages();
     }
 
-    // Optional: Add a function to reset/refresh images (can be called from console), DEBUG / Opcional: Adiciona uma função para resetar/atualizar imagens (pode ser chamada do console), DEBUG
     window.refreshBackgroundImages = function () {
         try {
-            localStorage.removeItem('codhub_bg_images');
+            localStorage.removeItem('codhub_bg_images_v2');
             location.reload();
         } catch (e) {
             console.error('Error refreshing background images:', e);
